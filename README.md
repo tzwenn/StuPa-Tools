@@ -1,6 +1,6 @@
 # StuPa-Tools
 
-Eine Sammlung von Werkzeugen zur Sitzungsvorbereitung des Studierenparlaments der Universität Potsdam.
+Eine Sammlung von Werkzeugen zur Sitzungsvorbereitung des Studierendenparlaments der Universität Potsdam.
 
 ## Sitzungsmappen
 
@@ -12,7 +12,7 @@ Der einzige Sinn und Zweck dieses Programms ist es ein schönes Inhaltsverzeichn
 
 Benötigt werden:
 
-   * Python3 mit [PyYAML](https://pypi.python.org/pypi/PyYAML)
+   * Python mit [PyYAML](https://pypi.python.org/pypi/PyYAML)
    * LaTeX mit `latexmk`
    * [Coherent PDF Command Line](http://community.coherentpdf.com) (Overkill. Zum Abschneiden der letzten Folie. Geht auch in Acrobat/Apple Preview/pdftk/…)
 
@@ -36,8 +36,8 @@ Als Eingabe wird ein Ordner mit den zu beinhaltenden PDFs und eine YAML-Datei fo
 Die Sitzungsmappe wird dann erzeugt mit
 
 ```bash
-$ ./sitzungsmappe.py inhalt.yaml --nummer 7 --datum 20170131
-$ ./sitzungsmappe.py inhalt.yaml --nummer 7 --datum 20170131 --public
+$ sitzungsmappe.py inhalt.yaml --nummer 7 -o 20170131_Sitzungsmappe.pdf
+$ sitzungsmappe.py inhalt.yaml --nummer 7 --public -o 20170131_Sitzungsmappe_webseite.pdf
 ```
 
 

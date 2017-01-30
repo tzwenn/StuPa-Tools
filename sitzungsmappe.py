@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import argparse
+import io
 import os
 import shutil
 import subprocess
@@ -100,9 +102,33 @@ class SitzungsmappenBuilder(object):
 
 ########## 
 
+def parseArguments():
+	parser = argparse.ArgumentParser(description="Tool zur Erstellung einer Sitzungsmappe aus einer YAML Beschreibung.")
+	parser.add_argument("inputfile", nargs='?',
+				type=argparse.FileType("r", encoding="utf-8"), 
+				default=io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'),
+				help="Die Eingabedatei (Standardeingabe wenn unspezifiziert)")
+	parser.add_argument("--public", "-p", action="store_true", help="Erzeuge die oeffentliche Version")
+
+	title_group = parser.add_mutually_exclusive_group()
+	title_group.add_argument("--nummer", "-n", type=int, default=None, help="Nummer der ordentlichen Sitzung (kommt in den Titel)")
+	title_group.add_argument("--titel", "-t", type=str, help="Der im PDF eingebundene Titel")
+
+	parser.add_argument("--ausgabe", "-o", type=str, default="Sitzungsmappe.pdf", help="Ausgabedatei")
+	parser.add_argument("--datenordner", "-d", type=str, default=".", help="Verzeichnis mit den Eingabedateien (Standard: Aktuelles Arbeitsverzeichnis)")
+
+	args = parser.parse_args()
+	if args.titel is None:
+		args.titel = "Sitzungsmappe" if args.nummer is None else ("Sitzungsmappe der %d. ordentlichen Sitzung" % args.nummer)
+
+	return args
+
 if __name__ == "__main__":
-	testfile = "testdata/test.yml" if len(sys.argv) < 2 else sys.argv[1]
-	builder = SitzungsmappenBuilder(open(testfile, encoding="utf-8"), 
-	                     "/Users/sven/ownCloud/StuPA/201617/17-01-31/Sitzungsmappe",
-	                     "Sitzungsmappe der n. ordentlichen Sitzung")
-	builder.build("20171438-Sitzungsmappe.pdf", public=False)
+	args = parseArguments()
+	try:
+		builder = SitzungsmappenBuilder(args.inputfile, args.datenordner, args.titel)
+		builder.build(args.ausgabe, public=args.public)
+	except KeyboardInterrupt:
+		pass
+
+
