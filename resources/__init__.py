@@ -9,6 +9,7 @@ document_tex = string.Template(r"""
 \usepackage[all]{hypcap}
 \usepackage{pdfpages}
 \usepackage{pdflscape}
+\usepackage{comment}
 
 \usepackage[top=0pt]{geometry}
 
@@ -19,13 +20,12 @@ document_tex = string.Template(r"""
 
 \begin{document}
 
-\clearpage\phantomsection
-$content
+\begin{comment}
+	\tableofcontents
+\end{comment}
 
 \clearpage\phantomsection
-\tiny 
-Bitte diese Seite löschen (Preview.app, cpdf, pdftk, \ldots)
-\tableofcontents
+$content
 
 \end{document}""")
 

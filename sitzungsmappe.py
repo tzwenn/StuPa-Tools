@@ -81,12 +81,6 @@ class SitzungsmappenBuilder(object):
 	def _changeExt(self, fileName, newExtension):
 		return os.extsep.join((os.path.splitext(fileName)[0], newExtension))
 
-	def _stripLastPage(self, source, dest):
-		# shutil.copyfile(source, dest)
-		cmd_line = ["cpdf", source, "1-~2", "-o", dest]
-		with subprocess.Popen(cmd_line) as p:
-			p.wait()
-
 	def build(self, outputFileName, public=False):
 		with tempfile.TemporaryDirectory() as tmpDirName:
 			tempFileName = os.path.join(tmpDirName, "Sitzungsmappe.tex")
@@ -98,7 +92,7 @@ class SitzungsmappenBuilder(object):
 			with subprocess.Popen(["latexmk", "-pdf"], cwd=tmpDirName) as p:
 				p.wait()
 			tmpOutputName = self._changeExt(tempFileName, 'pdf')
-			self._stripLastPage(tmpOutputName, outputFileName)
+			shutil.copyfile(tmpOutputName, outputFileName)
 
 ########## 
 

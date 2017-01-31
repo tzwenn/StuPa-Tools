@@ -14,7 +14,6 @@ Benötigt werden:
 
    * Python mit [PyYAML](https://pypi.python.org/pypi/PyYAML)
    * LaTeX mit `latexmk`
-   * [Coherent PDF Command Line](http://community.coherentpdf.com) (Overkill. Zum Abschneiden der letzten Folie. Geht auch in Acrobat/Apple Preview/pdftk/…)
 
 ### Benutzung
 
