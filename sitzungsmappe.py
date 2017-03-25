@@ -56,7 +56,7 @@ class SitzungsmappenBuilder(object):
 				  				    "sub" + currentDepth)
 			included_any = bool(sub)
 			if included_any:
-				return format_entry(name) + sub
+				return resources.clearpage_tex + format_entry(name) + sub
 			else:
 				return ""
 
